@@ -6,7 +6,9 @@ import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.repository.VehiculeRepository;
 import tn.esprit.autoloc.repository.AgenceRepository;
-
+import tn.esprit.autoloc.domain.Equipement;
+import tn.esprit.autoloc.repository.EquipementRepository;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +17,7 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
     private final VehiculeRepository VR;
     private final AgenceRepository AR;
+    private final EquipementRepository ER;
 
     @Override
     public List<Vehicule> retrieveAllVehicules() {
@@ -56,6 +59,41 @@ public class VehiculeServiceImpl implements IVehiculeService {
                 .orElseThrow(() -> new RuntimeException("Agence introuvable"));
 
         vehicule.setAgence(agence);
+
+        return VR.save(vehicule);
+    }
+    @Override
+    public Vehicule affecterEquipement(Long idVehicule, Long idEquipement) {
+
+        Vehicule vehicule = VR.findById(idVehicule)
+                .orElseThrow(() -> new RuntimeException("Véhicule introuvable"));
+
+        Equipement equipement = ER.findById(idEquipement)
+                .orElseThrow(() -> new RuntimeException("Équipement introuvable"));
+
+        if (vehicule.getEquipements() == null) {
+            vehicule.setEquipements(new ArrayList<>());
+        }
+
+        if (!vehicule.getEquipements().contains(equipement)) {
+            vehicule.getEquipements().add(equipement);
+        }
+
+        return VR.save(vehicule);
+    }
+
+    @Override
+    public Vehicule desaffecterEquipement(Long idVehicule, Long idEquipement) {
+
+        Vehicule vehicule = VR.findById(idVehicule)
+                .orElseThrow(() -> new RuntimeException("Véhicule introuvable"));
+
+        Equipement equipement = ER.findById(idEquipement)
+                .orElseThrow(() -> new RuntimeException("Équipement introuvable"));
+
+        if (vehicule.getEquipements() != null) {
+            vehicule.getEquipements().remove(equipement);
+        }
 
         return VR.save(vehicule);
     }

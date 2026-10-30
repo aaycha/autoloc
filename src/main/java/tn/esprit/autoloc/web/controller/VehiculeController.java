@@ -61,4 +61,21 @@ public class VehiculeController {
 
         return vehiculeService.affecterVehicule(idVehicule, idAgence);
     }
+    // Affecter un équipement à un véhicule
+    @PutMapping("/{idVehicule}/affecterEquipement/{idEquipement}")
+    public Vehicule affecterEquipement(
+            @PathVariable Long idVehicule,
+            @PathVariable Long idEquipement) {
+
+        return vehiculeService.affecterEquipement(idVehicule, idEquipement);
+    }
+
+    // Désaffecter un équipement d'un véhicule
+    @PutMapping("/{idVehicule}/desaffecterEquipement/{idEquipement}")
+    public Vehicule desaffecterEquipement(
+            @PathVariable Long idVehicule,
+            @PathVariable Long idEquipement) {
+
+        return vehiculeService.desaffecterEquipement(idVehicule, idEquipement);
+    }
 }
