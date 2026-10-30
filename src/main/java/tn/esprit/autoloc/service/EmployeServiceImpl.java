@@ -2,8 +2,10 @@ package tn.esprit.autoloc.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.Employe;
 import tn.esprit.autoloc.repository.EmployeRepository;
+import tn.esprit.autoloc.repository.AgenceRepository;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class EmployeServiceImpl implements IEmployeService {
 
     final EmployeRepository ER;
+    final AgenceRepository AR;
 
     @Override
     public List<Employe> retrieveAllEmployes() {
@@ -42,5 +45,30 @@ public class EmployeServiceImpl implements IEmployeService {
     public List<Employe> addEmployes(List<Employe> employes) {
         return (List<Employe>) ER.saveAll(employes);
     }
+    @Override
+    public Employe desaffecterEmploye(Long idEmploye) {
+
+        Employe employe = ER.findById(idEmploye)
+                .orElseThrow(() -> new RuntimeException("Employe introuvable"));
+
+        employe.setAgence(null);
+
+        return ER.save(employe);
+    }
+//AFFECTATION D4UN EMPLOYEE
+@Override
+public Employe affecterEmploye(Long idEmploye, Long idAgence) {
+
+    Employe employe = ER.findById(idEmploye)
+            .orElseThrow(() -> new RuntimeException("Employe introuvable"));
+
+    Agence agence = AR.findById(idAgence)
+            .orElseThrow(() -> new RuntimeException("Agence introuvable"));
+
+    employe.setAgence(agence);
+
+    return ER.save(employe);
 }
+}
+
 

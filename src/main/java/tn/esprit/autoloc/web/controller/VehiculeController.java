@@ -54,4 +54,11 @@ public class VehiculeController {
             @RequestBody List<Vehicule> vehicules) {
         return vehiculeService.addVehicules(vehicules);
     }
+    @PutMapping("/{idVehicule}/affecter/{idAgence}")
+    public Vehicule affecterVehicule(
+            @PathVariable Long idVehicule,
+            @PathVariable Long idAgence) {
+
+        return vehiculeService.affecterVehicule(idVehicule, idAgence);
+    }
 }
