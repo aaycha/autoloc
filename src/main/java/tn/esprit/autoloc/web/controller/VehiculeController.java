@@ -3,9 +3,12 @@ package tn.esprit.autoloc.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.autoloc.domain.CategorieVehicule;
+import tn.esprit.autoloc.domain.StatutVehicule;
 import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.service.IVehiculeService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -77,5 +80,43 @@ public class VehiculeController {
             @PathVariable Long idEquipement) {
 
         return vehiculeService.desaffecterEquipement(idVehicule, idEquipement);
+    }
+
+    // Scénario 1 : Rechercher les véhicules par marque
+    @GetMapping("/search/marque/{marque}")
+    public List<Vehicule> findByMarque(@PathVariable String marque) {
+        return vehiculeService.findByMarque(marque);
+    }
+
+    // Scénario 2 : Rechercher les véhicules par catégorie
+    @GetMapping("/search/categorie/{categorie}")
+    public List<Vehicule> findByCategorie(@PathVariable CategorieVehicule categorie) {
+        return vehiculeService.findByCategorie(categorie);
+    }
+
+    // Scénario 3 : Rechercher les véhicules disponibles
+    @GetMapping("/search/statut/{statut}")
+    public List<Vehicule> findByStatut(@PathVariable StatutVehicule statut) {
+        return vehiculeService.findByStatut(statut);
+    }
+
+    // Scénario 5 : Rechercher les véhicules dont la marque contient une chaîne
+    @GetMapping("/search/marque-contient/{marque}")
+    public List<Vehicule> findByMarqueContaining(@PathVariable String marque) {
+        return vehiculeService.findByMarqueContaining(marque);
+    }
+
+    // Scénario 8 : Rechercher les véhicules dont le tarif > 100
+    @GetMapping("/search/tarif-superieur/{tarif}")
+    public List<Vehicule> findByTarifJournalierGreaterThan(@PathVariable BigDecimal tarif) {
+        return vehiculeService.findByTarifJournalierGreaterThan(tarif);
+    }
+
+    // Scénario 11 : Rechercher les véhicules par marque ET statut DISPONIBLE
+    @GetMapping("/search/marque-statut")
+    public List<Vehicule> findByMarqueAndStatut(
+            @RequestParam String marque,
+            @RequestParam StatutVehicule statut) {
+        return vehiculeService.findByMarqueAndStatut(marque, statut);
     }
 }

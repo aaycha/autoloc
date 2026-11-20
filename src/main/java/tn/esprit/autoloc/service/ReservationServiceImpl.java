@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Reservation;
 import tn.esprit.autoloc.repository.ReservationRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,6 +42,12 @@ public class ReservationServiceImpl implements IReservationService {
     @Override
     public List<Reservation> addReservations(List<Reservation> reservations) {
         return (List<Reservation>) RR.saveAll(reservations);
+    }
+
+    // Scénario 14
+    @Override
+    public List<Reservation> findByDateDebutAfter(LocalDate date) {
+        return RR.findByDateDebutAfter(date);
     }
 }
 

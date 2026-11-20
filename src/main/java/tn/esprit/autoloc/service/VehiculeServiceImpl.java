@@ -2,12 +2,15 @@ package tn.esprit.autoloc.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.autoloc.domain.CategorieVehicule;
+import tn.esprit.autoloc.domain.StatutVehicule;
 import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.repository.VehiculeRepository;
 import tn.esprit.autoloc.repository.AgenceRepository;
 import tn.esprit.autoloc.domain.Equipement;
 import tn.esprit.autoloc.repository.EquipementRepository;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,5 +99,41 @@ public class VehiculeServiceImpl implements IVehiculeService {
         }
 
         return VR.save(vehicule);
+    }
+
+    // Scénario 1
+    @Override
+    public List<Vehicule> findByMarque(String marque) {
+        return VR.findByMarque(marque);
+    }
+
+    // Scénario 2
+    @Override
+    public List<Vehicule> findByCategorie(CategorieVehicule categorie) {
+        return VR.findByCategorie(categorie);
+    }
+
+    // Scénario 3
+    @Override
+    public List<Vehicule> findByStatut(StatutVehicule statut) {
+        return VR.findByStatut(statut);
+    }
+
+    // Scénario 5
+    @Override
+    public List<Vehicule> findByMarqueContaining(String marque) {
+        return VR.findByMarqueContaining(marque);
+    }
+
+    // Scénario 8
+    @Override
+    public List<Vehicule> findByTarifJournalierGreaterThan(BigDecimal tarif) {
+        return VR.findByTarifJournalierGreaterThan(tarif);
+    }
+
+    // Scénario 11
+    @Override
+    public List<Vehicule> findByMarqueAndStatut(String marque, StatutVehicule statut) {
+        return VR.findByMarqueAndStatut(marque, statut);
     }
 }

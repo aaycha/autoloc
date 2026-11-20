@@ -53,4 +53,10 @@ public class AgenceController {
     public List<Agence> addAgences(@RequestBody List<Agence> agences) {
         return agenceService.addAgences(agences);
     }
+
+    // Scénario 4 : Rechercher les agences par ville
+    @GetMapping("/search/ville/{ville}")
+    public List<Agence> findByVille(@PathVariable String ville) {
+        return agenceService.findByVille(ville);
+    }
 }

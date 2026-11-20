@@ -40,7 +40,11 @@ C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\service\Maint
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\service\PaiementServiceImpl.java
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\service\ReservationServiceImpl.java
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\service\VehiculeServiceImpl.java
+C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\AgenceController.java
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\ClientController.java
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\ContratController.java
+C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\EmployeController.java
+C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\EquipementController.java
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\PaiementController.java
 C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\ReservationController.java
+C:\Users\USER\IdeaProjects\autoloc\src\main\java\tn\esprit\autoloc\web\controller\VehiculeController.java
