@@ -1,10 +1,9 @@
-
 package tn.esprit.autoloc.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.service.IAgenceService;
+import tn.esprit.autoloc.web.dto.AgenceDTO;
 
 import java.util.List;
 
@@ -17,29 +16,29 @@ public class AgenceController {
 
     // READ : récupérer toutes les agences
     @GetMapping
-    public List<Agence> retrieveAllAgences() {
+    public List<AgenceDTO> retrieveAllAgences() {
         return agenceService.retrieveAllAgences();
     }
 
     // READ : récupérer une agence par son ID
     @GetMapping("/{id}")
-    public Agence retrieveAgence(@PathVariable Long id) {
+    public AgenceDTO retrieveAgence(@PathVariable Long id) {
         return agenceService.retrieveAgence(id);
     }
 
     // CREATE : ajouter une agence
     @PostMapping
-    public Agence addAgence(@RequestBody Agence agence) {
-        return agenceService.addAgence(agence);
+    public AgenceDTO addAgence(@RequestBody AgenceDTO agenceDTO) {
+        return agenceService.addAgence(agenceDTO);
     }
 
     // UPDATE : modifier une agence
     @PutMapping("/{id}")
-    public Agence updateAgence(
+    public AgenceDTO updateAgence(
             @PathVariable Long id,
-            @RequestBody Agence agence) {
-        agence.setIdAgence(id);
-        return agenceService.updateAgence(agence);
+            @RequestBody AgenceDTO agenceDTO) {
+        agenceDTO.setIdAgence(id);
+        return agenceService.updateAgence(agenceDTO);
     }
 
     // DELETE : supprimer une agence
@@ -50,13 +49,13 @@ public class AgenceController {
 
     // CREATE : ajouter plusieurs agences
     @PostMapping("/batch")
-    public List<Agence> addAgences(@RequestBody List<Agence> agences) {
+    public List<AgenceDTO> addAgences(@RequestBody List<AgenceDTO> agences) {
         return agenceService.addAgences(agences);
     }
 
     // Scénario 4 : Rechercher les agences par ville
     @GetMapping("/search/ville/{ville}")
-    public List<Agence> findByVille(@PathVariable String ville) {
+    public List<AgenceDTO> findByVille(@PathVariable String ville) {
         return agenceService.findByVille(ville);
     }
 }

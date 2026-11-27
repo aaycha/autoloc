@@ -1,8 +1,11 @@
 package tn.esprit.autoloc.service;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.repository.AgenceRepository;
+import tn.esprit.autoloc.web.dto.AgenceDTO;
+import tn.esprit.autoloc.web.dto.AgenceMapper;
 
 import java.util.List;
 
@@ -10,26 +13,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AgenceServiceImpl implements IAgenceService {
 
-    final AgenceRepository AR;
+    private final AgenceRepository AR;
+    private final AgenceMapper mapper;
 
     @Override
-    public List<Agence> retrieveAllAgences() {
-        return (List<Agence>) AR.findAll();
+    public List<AgenceDTO> retrieveAllAgences() {
+        List<Agence> agences = (List<Agence>) AR.findAll();
+        return mapper.toDtoList(agences);
     }
 
     @Override
-    public Agence addAgence(Agence a) {
-        return AR.save(a);
+    public AgenceDTO addAgence(AgenceDTO a) {
+        Agence agence = mapper.toEntity(a);
+        Agence saved = AR.save(agence);
+        return mapper.toDto(saved);
     }
 
     @Override
-    public Agence updateAgence(Agence a) {
-        return AR.save(a);
+    public AgenceDTO updateAgence(AgenceDTO a) {
+        Agence agence = mapper.toEntity(a);
+        Agence updated = AR.save(agence);
+        return mapper.toDto(updated);
     }
 
     @Override
-    public Agence retrieveAgence(Long idAgence) {
-        return AR.findById(idAgence).orElse(null);
+    public AgenceDTO retrieveAgence(Long idAgence) {
+        Agence agence = AR.findById(idAgence).orElse(null);
+        return mapper.toDto(agence);
     }
 
     @Override
@@ -38,14 +48,16 @@ public class AgenceServiceImpl implements IAgenceService {
     }
 
     @Override
-    public List<Agence> addAgences(List<Agence> agences) {
-        return (List<Agence>) AR.saveAll(agences);
+    public List<AgenceDTO> addAgences(List<AgenceDTO> agences) {
+        List<Agence> entities = mapper.toEntityList(agences);
+        List<Agence> saved = (List<Agence>) AR.saveAll(entities);
+        return mapper.toDtoList(saved);
     }
 
     // Scénario 4
     @Override
-    public List<Agence> findByVille(String ville) {
-        return AR.findByVille(ville);
+    public List<AgenceDTO> findByVille(String ville) {
+        List<Agence> agences = AR.findByVille(ville);
+        return mapper.toDtoList(agences);
     }
 }
-
