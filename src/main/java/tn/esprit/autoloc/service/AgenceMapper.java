@@ -1,7 +1,8 @@
-package tn.esprit.autoloc.web.dto;
+package tn.esprit.autoloc.service;
 
 import org.mapstruct.Mapper;
 import tn.esprit.autoloc.domain.Agence;
+import tn.esprit.autoloc.web.dto.AgenceDTO;
 
 import java.util.List;
 

@@ -1,36 +1,59 @@
 package tn.esprit.autoloc.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Client;
 import tn.esprit.autoloc.repository.ClientRepository;
+import tn.esprit.autoloc.web.dto.ClientDTO;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements IclientService {
-   final ClientRepository CR;
+
+    private final ClientRepository CR;
+    private final ClientMapper mapper;
 
     @Override
-    public List<Client> retrieveAllClients() {
-        return (List<Client>) CR.findAll();
+    public List<ClientDTO> retrieveAllClients() {
+        List<Client> clients = (List<Client>) CR.findAll();
+        return mapper.toDtoList(clients);
     }
 
     @Override
-    public Client addClient(Client c) {
-        return CR.save(c);
+    public ClientDTO addClient(ClientDTO c) {
+        Client client = mapper.toEntity(c);
+        Client saved = CR.save(client);
+        return mapper.toDto(saved);
     }
 
     @Override
-    public Client updateClient(Client c) {
-        return CR.save(c);
+    public ClientDTO updateClient(ClientDTO c) {
+        Client client = mapper.toEntity(c);
+        Client updated = CR.save(client);
+        return mapper.toDto(updated);
     }
 
     @Override
-    public Client retrieveClient(Long idClient) {
-        return CR.findById(idClient).orElse(null);
+    public ClientDTO updateClient(Long id, ClientDTO c) {
+        Client client = CR.findById(id).orElse(null);
+        if (client != null) {
+            client.setNom(c.getNom());
+            client.setPrenom(c.getPrenom());
+            client.setEmail(c.getEmail());
+            client.setTelephone(c.getTelephone());
+            client.setDateInscription(c.getDateInscription());
+            Client updated = CR.save(client);
+            return mapper.toDto(updated);
+        }
+        return null;
+    }
+
+    @Override
+    public ClientDTO retrieveClient(Long idClient) {
+        Client client = CR.findById(idClient).orElse(null);
+        return mapper.toDto(client);
     }
 
     @Override
@@ -39,8 +62,9 @@ public class ClientServiceImpl implements IclientService {
     }
 
     @Override
-    public List<Client> addClients(List<Client> clients) {
-        return (List<Client>) CR.saveAll(clients);
+    public List<ClientDTO> addClients(List<ClientDTO> clients) {
+        List<Client> entities = mapper.toEntityList(clients);
+        List<Client> saved = (List<Client>) CR.saveAll(entities);
+        return mapper.toDtoList(saved);
     }
 }
-
